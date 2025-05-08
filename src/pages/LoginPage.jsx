@@ -4,6 +4,8 @@ import { UserContext } from '../context/UserContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
+    //email and password set for demo login
+  // In a real application,use a secure method to handle authentication
   const [email, setEmail] = useState('demo@example.com');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
