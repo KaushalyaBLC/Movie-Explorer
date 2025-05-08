@@ -81,32 +81,37 @@ const ResponsiveAppBar = () => {
                 Movie Explorer
               </Typography>
             </Box>
-            <IconButton size="large" aria-label="menu" onClick={handleOpenNavMenu} color="inherit">
-              <MenuIcon />
-            </IconButton>
+            {isLoggedIn && (
+              <IconButton size="large" aria-label="menu" onClick={handleOpenNavMenu} color="inherit">
+                <MenuIcon />
+              </IconButton>
+            )}
           </Box>
 
-          {/* Mobile menu */}
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElNav}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={Boolean(anchorElNav)}
-            onClose={handleCloseNavMenu}
-            sx={{ display: { xs: 'block', md: 'none' } }}
-          >
-            {pages.map((page) => (
-              <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">{page.name}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
+          {/* Mobile menu - only shown when logged in */}
+          {isLoggedIn && (
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              keepMounted
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          )}
 
           {/* Desktop navigation */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, ml: 'auto', alignItems: 'center' }}>
-            {pages.map((page) => (
+            {/* Navigation links - only shown when logged in */}
+            {isLoggedIn && pages.map((page) => (
               <Button
                 key={page.name}
                 component="a"
