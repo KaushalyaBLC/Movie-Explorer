@@ -31,7 +31,7 @@ Follow these instructions to set up and run the project locally.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/KaushalyaBLC/movie-explorer.git
+   git clone https://github.com/KaushalyaBLC/Movie-Explorer.git
    cd movie-explorer
    ```
 2. Install Dependencies:
