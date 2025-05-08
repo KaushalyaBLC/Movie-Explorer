@@ -6,20 +6,43 @@ import { getTrendingMovies } from '../api/tmdbAPI';
 export const MovieContext = createContext();
 
 export const MovieProvider = ({ children }) => {
-  // Trending movies
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Favorites state
+  // Initialize favorites from localStorage
   const [favorites, setFavorites] = useState(() => {
     const savedFavorites = localStorage.getItem('favorites');
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   });
 
-  // Last search state
+  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [lastSearch, setLastSearch] = useState(() => {
     return localStorage.getItem('lastSearch') || '';
   });
+
+  // Update localStorage whenever favorites change
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
+
+  // Toggle favorite status
+  const toggleFavorite = (movie) => {
+    setFavorites((prevFavorites) => {
+      const exists = prevFavorites.some((m) => m.id === movie.id);
+      
+      // If movie exists in favorites, remove it
+      if (exists) {
+        const updatedFavorites = prevFavorites.filter((m) => m.id !== movie.id);
+        // Update localStorage immediately after removal
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+        return updatedFavorites;
+      }
+      
+      // If movie doesn't exist, add it
+      const updatedFavorites = [...prevFavorites, movie];
+      // Update localStorage immediately after addition
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      return updatedFavorites;
+    });
+  };
 
   // Fetch trending movies on mount
   useEffect(() => {
@@ -35,27 +58,7 @@ export const MovieProvider = ({ children }) => {
     };
 
     loadTrendingMovies();
-  }, []); // Empty dependency array ensures it only runs once on mount
-
-  // Persist favorites and last search to localStorage
-  useEffect(() => {
-    if (favorites.length > 0) {
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-    }
-    if (lastSearch) {
-      localStorage.setItem('lastSearch', lastSearch);
-    }
-  }, [favorites, lastSearch]);
-
-  // Toggle favorite status
-  const toggleFavorite = (movie) => {
-    setFavorites((prevFavorites) => {
-      const exists = prevFavorites.some((m) => m.id === movie.id);
-      return exists
-        ? prevFavorites.filter((m) => m.id !== movie.id)
-        : [...prevFavorites, movie];
-    });
-  };
+  }, []);
 
   return (
     <MovieContext.Provider
