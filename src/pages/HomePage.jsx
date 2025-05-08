@@ -180,7 +180,9 @@ const HomePage = () => {
         </section>
       ) : (
         <section>
+            <Container maxWidth="lg" sx={{ mt: 5 }}>
           <h2>Trending movies this week</h2>
+          </Container>
           <Trending />
         </section>
       )}
