@@ -72,7 +72,7 @@ movie_explorer/
 ├── package.json           # Project metadata and dependencies
 └── README.md              # Project documentation
 ```
-## 🎬 Features in Detail
+## Features in Detail
 
 ### 1. **Trending Movies**
 - Displays a dynamic list of trending movies fetched from the [TMDb API](https://www.themoviedb.org/documentation/api).
@@ -99,7 +99,7 @@ movie_explorer/
 - Toggle between **light** and **dark** themes using the switch in the navigation bar.
 - Theme preference is saved in `localStorage` for future visits.
 
-## 📜 Scripts
+## Scripts
 
 The following scripts are available in the project. You can run them using **npm** or **yarn**.
 
@@ -121,13 +121,13 @@ The following scripts are available in the project. You can run them using **npm
 - **Ejects** the app and exposes the full Webpack configuration.
 - ⚠️ **Note**: This is a **one-way operation**. Once ejected, you can't go back easily.
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License**.  
 
 ---
 
-## 🙌 Acknowledgments
+## Acknowledgments
 
 - [TMDb API](https://www.themoviedb.org/documentation/api) – for providing movie data.
 - [Material-UI](https://mui.com/) – for elegant and reusable UI components.
@@ -135,7 +135,7 @@ This project is licensed under the **MIT License**.
 
 ---
 
-## 📬 Contact
+## Contact
 
 For any inquiries, feedback, or contributions, feel free to reach out:
 
