@@ -2,6 +2,12 @@
 
 Movie Explorer is a React-based web application that allows users to explore trending movies, search for specific movies, and manage their favorite movies. The app supports both light and dark themes and provides a seamless user experience.
 
+🎬 **Live Demo**: [https://movie-explorer-olive.vercel.app/](https://movie-explorer-olive.vercel.app/)
+
+### Demo Credentials
+- **Email**: demo@example.com
+- **Password**: password
+
 ---
 
 ## Features
