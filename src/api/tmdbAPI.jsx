@@ -43,7 +43,7 @@ export const searchMovies = async (query, page = 1) => {
 // Get movie details by ID
 export const getMovieDetails = async (movieId) => {
   try {
-    const response = await api.get(`/movie/${movieId}`);
+    const response = await api.get(`/movie/${movieId}?append_to_response=videos`);
     return response.data; // Return the full movie details
   } catch (error) {
     console.error('Error fetching movie details:', error);

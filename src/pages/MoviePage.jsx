@@ -28,6 +28,7 @@ const MoviePage = () => {
       try {
         const data = await getMovieDetails(id);
         setMovie(data);
+        console.log(data); // Log the movie details for debugging
       } catch (error) {
         console.error('Error fetching movie details:', error);
       } finally {
@@ -37,6 +38,23 @@ const MoviePage = () => {
 
     fetchMovieDetails();
   }, [id]);
+
+  // Find the official trailer
+  const getTrailer = (videos) => {
+    if (!videos?.results) return null;
+    
+    // First try to find an official trailer
+    const officialTrailer = videos.results.find(
+      video => video.type === 'Trailer' && video.official === true && video.site === 'YouTube'
+    );
+    
+    // If no official trailer, get any trailer
+    const anyTrailer = videos.results.find(
+      video => video.type === 'Trailer' && video.site === 'YouTube'
+    );
+    
+    return officialTrailer || anyTrailer;
+  };
 
   // Show a loading spinner while fetching data
   if (loading)
@@ -49,16 +67,11 @@ const MoviePage = () => {
   // Show a message if the movie is not found
   if (!movie) return <Typography variant="h6">Movie not found</Typography>;
 
-  // Find the YouTube trailer for the movie
-  const trailer = movie.videos?.results.find(
-    (video) => video.type === 'Trailer' && video.site === 'YouTube'
-  );
-
   // Check if the movie is in the favorites list
   const isFavorite = favorites.some((fav) => fav.id === movie.id);
 
   return (
-    <Container maxWidth="md" sx={{ mt: 5 }}>
+    <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>
       {/* Movie Title */}
       <Typography variant="h3" gutterBottom>
         {movie.title}
@@ -143,20 +156,57 @@ const MoviePage = () => {
         </Typography>
       </Box>
 
-      {/* Movie Trailer */}
-      {trailer && (
+      {/* Movie Trailer Section */}
+      {movie.videos && (
         <Box sx={{ mt: 5 }}>
           <Typography variant="h5" gutterBottom>
             Watch Trailer
           </Typography>
-          <iframe
-            title={`${movie.title} Trailer`} // Add a unique title for accessibility
-            width="100%"
-            height="500"
-            src={`https://www.youtube.com/embed/${trailer.key}`}
-            frameBorder="0"
-            allowFullScreen
-          />
+          <Box
+            sx={{
+              position: 'relative',
+              width: '100%',
+              paddingTop: '56.25%', // 16:9 Aspect Ratio
+              borderRadius: 1,
+              overflow: 'hidden',
+            }}
+          >
+            {getTrailer(movie.videos) ? (
+              <iframe
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                }}
+                src={`https://www.youtube.com/embed/${getTrailer(movie.videos).key}`}
+                title={`${movie.title} Trailer`}
+                allowFullScreen
+              />
+            ) : (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  bgcolor: 'grey.200',
+                }}
+              >
+                <Typography variant="body1" color="text.secondary">
+                  No trailer available
+                </Typography>
+              </Box>
+            )}
+          </Box>
         </Box>
       )}
     </Container>

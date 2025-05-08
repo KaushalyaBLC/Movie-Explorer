@@ -17,11 +17,20 @@ function App() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          minHeight: '100vh', // Ensures footer stays at bottom
+          minHeight: '100vh',
         }}
       >
         <NavBar />
-        <Box sx={{ flex: 1 }}>
+        <Box
+          component="main"
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            py: 3, // Add padding top and bottom
+            overflowY: 'auto', // Enable scrolling for content
+          }}
+        >
           <AppRouter />
         </Box>
         <Footer />
